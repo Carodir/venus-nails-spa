@@ -4,26 +4,36 @@
     <meta charset="UTF-8">
     <title>Citas - Venus Nails</title>
     <style>
-        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #7b5ea7; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #7b5ea7; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(123,94,167,0.15); }
         th { background: #7b5ea7; color: white; padding: 12px; text-align: left; }
         td { padding: 12px; border-bottom: 1px solid #f3f0f8; }
         tr:hover { background: #f3f0f8; }
-        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
+        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block; }
+        .btn-confirm { background: #43a047; color: white; padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; }
         .btn-cancel { background: #e53935; color: white; padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; }
-        .back { color: #7b5ea7; }
+        .btn-edit { background: #fb8c00; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; display: inline-block; }
+        .top-bar { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+        .bottom-bar { margin-top: 20px; }
+        .back { color: #7b5ea7; text-decoration: none; }
+        .estado-pendiente { color: #fb8c00; font-weight: bold; }
+        .estado-confirmada { color: #43a047; font-weight: bold; }
+        .estado-cancelada { color: #e53935; font-weight: bold; }
     </style>
 </head>
 <body>
     <h1>📅 Citas</h1>
-    <a class="back" th:href="@{/cliente/panel}">← Volver</a>
-    <a class="btn" th:href="@{/citas/agendar}">+ Nueva Cita</a>
-    <br><br>
+    <div class="top-bar">
+        <a class="btn" th:href="@{/citas/agendar}">+ Nueva Cita</a>
+    </div>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
                 <th>Fecha</th>
                 <th>Hora Inicio</th>
                 <th>Hora Fin</th>
@@ -32,16 +42,27 @@
             </tr>
         </thead>
         <tbody>
-            <!-- th:each itera sobre la lista de citas -->
             <tr th:each="cita : ${citas}">
                 <td th:text="${cita.idCita}"></td>
+                <td th:text="${cita.usuario.nombre + ' ' + cita.usuario.apellido}"></td>
+                <td th:text="${cita.servicio.nombre}"></td>
                 <td th:text="${cita.fecha}"></td>
                 <td th:text="${cita.horaInicio}"></td>
                 <td th:text="${cita.horaFin}"></td>
-                <td th:text="${cita.estado}"></td>
                 <td>
-                    <!-- Solo mostrar cancelar si no esta ya cancelada -->
-                    <form th:if="${cita.estado != 'Cancelada'}"
+                    <span th:classappend="${cita.estado == 'Pendiente'} ? 'estado-pendiente' : (${cita.estado == 'Confirmada'} ? 'estado-confirmada' : 'estado-cancelada')"
+                          th:text="${cita.estado}"></span>
+                </td>
+                <td>
+                    <a class="btn-edit" th:href="@{/citas/modificar/{id}(id=${cita.idCita})}">Modificar</a>
+                    <form style="display:inline"
+                          th:if="${cita.estado == 'Pendiente'}"
+                          th:action="@{/citas/confirmar/{id}(id=${cita.idCita})}"
+                          method="post">
+                        <button class="btn-confirm" type="submit">Confirmar</button>
+                    </form>
+                    <form style="display:inline"
+                          th:if="${cita.estado != 'Cancelada'}"
                           th:action="@{/citas/cancelar/{id}(id=${cita.idCita})}"
                           method="post">
                         <button class="btn-cancel" type="submit">Cancelar</button>
@@ -50,5 +71,8 @@
             </tr>
         </tbody>
     </table>
+    <div class="bottom-bar">
+        <a class="back" th:href="@{/admin/panel}">← Volver al Panel</a>
+    </div>
 </body>
 </html>

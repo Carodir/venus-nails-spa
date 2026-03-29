@@ -1,17 +1,108 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Panel Admin - Venus Nails Spa</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #f3f0f8;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+        header {
+            background: #7b5ea7;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(123,94,167,0.3);
+        }
+        header h1 {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        header span.bienvenida {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .logout:hover { background: rgba(255,255,255,0.35); }
+        main {
+            padding: 40px;
+        }
+        h2 {
+            color: #7b5ea7;
+            margin-bottom: 24px;
+            font-size: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(123,94,167,0.15);
+            text-decoration: none;
+            color: #7b5ea7;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(123,94,167,0.25);
+        }
+        .card .icon { font-size: 40px; margin-bottom: 12px; }
+        .card .label { font-size: 16px; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <h1>Panel de Administración</h1>
-    <p>Bienvenida, <span th:text="${usuario.nombre}">administradora</span>.</p>
-    <ul>
-        <li><a th:href="@{/citas}">Gestionar Citas</a></li>
-        <li><a th:href="@{/servicios}">Gestionar Servicios</a></li>
-        <li><a th:href="@{/usuarios}">Gestionar Usuarios</a></li>
-        <li><a th:href="@{/pagos}">Gestionar Pagos</a></li>
-    </ul>
+    <header>
+        <h1>🌸 Venus Nails Spa</h1>
+        <span class="bienvenida">Bienvenida, <span th:text="${usuario.nombre}">Admin</span></span>
+        <a class="logout" th:href="@{/logout}">Cerrar sesión</a>
+    </header>
+    <main>
+        <h2>Panel de Administración</h2>
+        <div class="grid">
+            <a class="card" th:href="@{/citas}">
+                <div class="icon">📅</div>
+                <div class="label">Gestionar Citas</div>
+            </a>
+            <a class="card" th:href="@{/servicios}">
+                <div class="icon">💅</div>
+                <div class="label">Gestionar Servicios</div>
+            </a>
+            <a class="card" th:href="@{/usuarios/listar}">
+                <div class="icon">👥</div>
+                <div class="label">Gestionar Usuarios</div>
+            </a>
+            <a class="card" th:href="@{/pagos}">
+                <div class="icon">💳</div>
+                <div class="label">Gestionar Pagos</div>
+            </a>
+            <a class="card" th:href="@{/horarios}">
+                <div class="icon">🕐</div>
+                <div class="label">Gestionar Horarios</div>
+            </a>
+            <a class="card" th:href="@{/resenas}">
+                <div class="icon">⭐</div>
+                <div class="label">Gestionar Reseñas</div>
+            </a>
+        </div>
+    </main>
 </body>
 </html>
