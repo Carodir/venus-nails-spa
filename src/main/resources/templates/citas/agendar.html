@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendar Cita - Venus Nails</title>
+    <style>
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { color: #7b5ea7; }
+        .card { background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); max-width: 480px; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #d1c4e9; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 8px; }
+        button:hover { background: #5e2d91; }
+        .back { color: #7b5ea7; }
+        label { color: #555; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>📅 Agendar Cita</h1>
+    <a class="back" th:href="@{/citas/listar}">← Volver</a>
+    <br><br>
+    <div class="card">
+        <form th:action="@{/citas/agendar}" method="post" th:object="${cita}">
+            <label>ID Usuario</label>
+            <input type="number" th:field="*{idUsuario}" required>
+            <label>Servicio</label>
+            <!-- th:each llena el select con los servicios de la BD -->
+            <select th:field="*{idServicio}">
+                <option th:each="servicio : ${servicios}"
+                        th:value="${servicio.idServicio}"
+                        th:text="${servicio.nombre}">
+                </option>
+            </select>
+            <label>Fecha</label>
+            <input type="date" th:field="*{fecha}" required>
+            <label>Hora de inicio</label>
+            <input type="time" th:field="*{horaInicio}" required>
+            <button type="submit">Agendar Cita</button>
+        </form>
+    </div>
+</body>
+</html>

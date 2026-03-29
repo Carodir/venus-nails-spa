@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Admin - Venus Nails Spa</title>
+</head>
+<body>
+    <h1>Panel de Administración</h1>
+    <p>Bienvenida, <span th:text="${usuario.nombre}">administradora</span>.</p>
+    <ul>
+        <li><a th:href="@{/citas}">Gestionar Citas</a></li>
+        <li><a th:href="@{/servicios}">Gestionar Servicios</a></li>
+        <li><a th:href="@{/usuarios}">Gestionar Usuarios</a></li>
+        <li><a th:href="@{/pagos}">Gestionar Pagos</a></li>
+    </ul>
+</body>
+</html>

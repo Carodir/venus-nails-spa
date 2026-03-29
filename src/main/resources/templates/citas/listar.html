@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Citas - Venus Nails</title>
+    <style>
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { color: #7b5ea7; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(123,94,167,0.15); }
+        th { background: #7b5ea7; color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #f3f0f8; }
+        tr:hover { background: #f3f0f8; }
+        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
+        .btn-cancel { background: #e53935; color: white; padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; }
+        .back { color: #7b5ea7; }
+    </style>
+</head>
+<body>
+    <h1>📅 Citas</h1>
+    <a class="back" th:href="@{/cliente/panel}">← Volver</a>
+    <a class="btn" th:href="@{/citas/agendar}">+ Nueva Cita</a>
+    <br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- th:each itera sobre la lista de citas -->
+            <tr th:each="cita : ${citas}">
+                <td th:text="${cita.idCita}"></td>
+                <td th:text="${cita.fecha}"></td>
+                <td th:text="${cita.horaInicio}"></td>
+                <td th:text="${cita.horaFin}"></td>
+                <td th:text="${cita.estado}"></td>
+                <td>
+                    <!-- Solo mostrar cancelar si no esta ya cancelada -->
+                    <form th:if="${cita.estado != 'Cancelada'}"
+                          th:action="@{/citas/cancelar/{id}(id=${cita.idCita})}"
+                          method="post">
+                        <button class="btn-cancel" type="submit">Cancelar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

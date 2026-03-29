@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venus Nails Spa - Login</title>
+    <style>
+        body {
+            background-color: #f3f0f8;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(123,94,167,0.2);
+            width: 360px;
+        }
+        h1 {
+            color: #7b5ea7;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #d1c4e9;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #7b5ea7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        button:hover { background: #5e2d91; }
+        .error {
+            color: red;
+            text-align: center;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🌸 Venus Nails Spa</h1>
+        <!-- Mostrar error si las credenciales son incorrectas -->
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+        <!-- th:action genera la URL correcta del proyecto -->
+        <form th:action="@{/login}" method="post">
+            <input type="email" name="correo" placeholder="Correo electronico" required>
+            <input type="password" name="contrasena" placeholder="Contrasena" required>
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+</body>
+</html>

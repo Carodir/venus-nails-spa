@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Cliente - Venus Nails</title>
+    <style>
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { color: #7b5ea7; }
+        .menu { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(123,94,167,0.15);
+            width: 180px;
+            text-align: center;
+            text-decoration: none;
+            color: #7b5ea7;
+            font-weight: bold;
+        }
+        .card:hover { background: #7b5ea7; color: white; }
+        .logout { margin-top: 24px; display: inline-block; color: red; }
+    </style>
+</head>
+<body>
+    <h1>🌸 Mi Panel</h1>
+    <p>Bienvenida, <span th:text="${session.usuarioLogueado.nombre}"></span></p>
+    <div class="menu">
+        <a class="card" th:href="@{/citas/agendar}">📅 Agendar Cita</a>
+        <a class="card" th:href="@{/citas/listar}">📋 Mis Citas</a>
+        <a class="card" th:href="@{/pagos/listar}">💳 Mis Pagos</a>
+        <a class="card" th:href="@{/resenas/agregar}">⭐ Dejar Resena</a>
+    </div>
+    <a class="logout" th:href="@{/logout}">Cerrar sesion</a>
+</body>
+</html>

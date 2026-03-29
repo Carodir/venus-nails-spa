@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagos - Venus Nails</title>
+    <style>
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { color: #7b5ea7; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(123,94,167,0.15); }
+        th { background: #7b5ea7; color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #f3f0f8; }
+        tr:hover { background: #f3f0f8; }
+        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
+        .back { color: #7b5ea7; }
+    </style>
+</head>
+<body>
+    <h1>💳 Pagos</h1>
+    <a class="back" th:href="@{/admin/panel}">← Volver</a>
+    <a class="btn" th:href="@{/pagos/agregar}">+ Nuevo Pago</a>
+    <br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID Cita</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Metodo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pago : ${pagos}">
+                <td th:text="${pago.idPago}"></td>
+                <td th:text="${pago.idCita}"></td>
+                <td th:text="${pago.fecha}"></td>
+                <td th:text="${pago.monto}"></td>
+                <td th:text="${pago.metodo}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

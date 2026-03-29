@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios - Venus Nails</title>
+    <style>
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { color: #7b5ea7; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(123,94,167,0.15); }
+        th { background: #7b5ea7; color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #f3f0f8; }
+        tr:hover { background: #f3f0f8; }
+        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
+        .back { margin-bottom: 16px; display: inline-block; color: #7b5ea7; }
+    </style>
+</head>
+<body>
+    <h1>👥 Lista de Usuarios</h1>
+    <a class="back" th:href="@{/admin/panel}">← Volver al panel</a>
+    <a class="btn" th:href="@{/usuarios/registrar}">+ Nuevo Usuario</a>
+    <br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- th:each itera sobre la lista de usuarios -->
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.idUsuario}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellido}"></td>
+                <td th:text="${usuario.correo}"></td>
+                <td th:text="${usuario.telefono}"></td>
+                <td th:text="${usuario.rol}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
