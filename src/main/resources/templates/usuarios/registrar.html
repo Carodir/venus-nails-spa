@@ -4,36 +4,53 @@
     <meta charset="UTF-8">
     <title>Registrar Usuario - Venus Nails</title>
     <style>
-        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #7b5ea7; }
-        .card { background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); max-width: 480px; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #d1c4e9; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 8px; }
-        button:hover { background: #5e2d91; }
-        .error { color: red; margin-bottom: 12px; }
-        .back { color: #7b5ea7; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; min-height: 100vh; }
+        header { background: #7b5ea7; color: white; padding: 16px 40px; font-size: 20px; font-weight: bold; }
+        main { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        h1 { color: #7b5ea7; margin-bottom: 24px; }
+        .card { background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); width: 100%; max-width: 480px; }
+        label { display: block; color: #7b5ea7; font-weight: bold; margin-top: 16px; margin-bottom: 6px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #d1c4e9; border-radius: 8px; font-size: 14px; }
+        input:focus, select:focus { outline: none; border-color: #7b5ea7; }
+        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 24px; }
+        button:hover { background: #6a4f96; }
+        .error { background: #fdecea; color: #e53935; padding: 10px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
+        .back { color: #7b5ea7; text-decoration: none; display: inline-block; margin-top: 16px; }
+        .login-link { text-align: center; margin-top: 16px; font-size: 14px; color: #888; }
+        .login-link a { color: #7b5ea7; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>➕ Registrar Usuario</h1>
-    <a class="back" th:href="@{/usuarios/listar}">← Volver</a>
-    <br><br>
-    <div class="card">
-        <!-- Mostrar error si el correo ya existe -->
-        <p class="error" th:if="${error}" th:text="${error}"></p>
-        <form th:action="@{/usuarios/registrar}" method="post" th:object="${usuario}">
-            <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
-            <input type="text" th:field="*{apellido}" placeholder="Apellido" required>
-            <input type="email" th:field="*{correo}" placeholder="Correo electronico" required>
-            <input type="text" th:field="*{telefono}" placeholder="Telefono">
-            <input type="password" th:field="*{contrasena}" placeholder="Contrasena" required>
-            <select th:field="*{rol}">
-                <option value="cliente">Cliente</option>
-                <option value="manicurista">Manicurista</option>
-                <option value="admin">Administrador</option>
-            </select>
-            <button type="submit">Registrar</button>
-        </form>
-    </div>
+    <header>🌸 Venus Nails Spa</header>
+    <main>
+        <h1>➕ Crear Cuenta</h1>
+        <div class="card">
+            <p class="error" th:if="${error}" th:text="${error}"></p>
+            <form th:action="@{/usuarios/registrar}" method="post" th:object="${usuario}">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" placeholder="Tu nombre" required>
+                <label>Apellido</label>
+                <input type="text" th:field="*{apellido}" placeholder="Tu apellido" required>
+                <label>Correo electrónico</label>
+                <input type="email" th:field="*{correo}" placeholder="correo@ejemplo.com" required>
+                <label>Teléfono</label>
+                <input type="text" th:field="*{telefono}" placeholder="Ej: 3001234567">
+                <label>Contraseña</label>
+                <input type="password" th:field="*{contrasena}" placeholder="Mínimo 6 caracteres" required>
+                <label>Rol</label>
+                <select th:field="*{rol}">
+                    <option value="cliente">Cliente</option>
+                    <option value="manicurista">Manicurista</option>
+                    <option value="admin">Administrador</option>
+                </select>
+                <button type="submit">Crear Cuenta</button>
+            </form>
+            <div class="login-link">
+                ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a>
+            </div>
+            <a class="back" th:href="@{/usuarios/listar}">← Volver a Usuarios</a>
+        </div>
+    </main>
 </body>
 </html>

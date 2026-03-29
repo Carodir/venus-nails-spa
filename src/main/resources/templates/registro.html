@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venus Nails Spa - Login</title>
+    <title>Crear Cuenta - Venus Nails Spa</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -12,28 +12,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
         }
         .card {
             background: white;
             padding: 40px;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(123,94,167,0.2);
-            width: 360px;
+            width: 100%;
+            max-width: 400px;
         }
-        h1 {
-            color: #7b5ea7;
-            text-align: center;
-            margin-bottom: 8px;
-            font-size: 24px;
-        }
-        .subtitulo {
-            text-align: center;
-            color: #aaa;
-            font-size: 13px;
-            margin-bottom: 24px;
-        }
-        label { display: block; color: #7b5ea7; font-weight: bold; margin-bottom: 6px; margin-top: 16px; }
+        h1 { color: #7b5ea7; text-align: center; margin-bottom: 8px; font-size: 24px; }
+        .subtitulo { text-align: center; color: #aaa; font-size: 13px; margin-bottom: 24px; }
+        label { display: block; color: #7b5ea7; font-weight: bold; margin-top: 16px; margin-bottom: 6px; }
         input {
             width: 100%;
             padding: 12px;
@@ -63,31 +55,32 @@
             margin-bottom: 16px;
             font-size: 14px;
         }
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #888;
-        }
-        .register-link a { color: #7b5ea7; text-decoration: none; font-weight: bold; }
-        .register-link a:hover { text-decoration: underline; }
+        .login-link { text-align: center; margin-top: 20px; font-size: 14px; color: #888; }
+        .login-link a { color: #7b5ea7; text-decoration: none; font-weight: bold; }
+        .login-link a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="card">
         <h1>🌸 Venus Nails Spa</h1>
-        <p class="subtitulo">Inicia sesión para continuar</p>
+        <p class="subtitulo">Crea tu cuenta gratis</p>
         <p class="error" th:if="${error}" th:text="${error}"></p>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/registro}" method="post" th:object="${usuario}">
+            <label>Nombre</label>
+            <input type="text" th:field="*{nombre}" placeholder="Tu nombre" required>
+            <label>Apellido</label>
+            <input type="text" th:field="*{apellido}" placeholder="Tu apellido" required>
             <label>Correo electrónico</label>
-            <input type="email" name="correo" placeholder="correo@ejemplo.com" required>
+            <input type="email" th:field="*{correo}" placeholder="correo@ejemplo.com" required>
+            <label>Teléfono</label>
+            <input type="text" th:field="*{telefono}" placeholder="Ej: 3001234567">
             <label>Contraseña</label>
-            <input type="password" name="contrasena" placeholder="Tu contraseña" required>
-            <button type="submit">Ingresar</button>
+            <input type="password" th:field="*{contrasena}" placeholder="Mínimo 6 caracteres" required>
+            <button type="submit">Crear Cuenta</button>
         </form>
-        <div class="register-link">
-    ¿No tienes cuenta? <a th:href="@{/registro}">Regístrate aquí</a>
-</div>
+        <div class="login-link">
+            ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a>
+        </div>
     </div>
 </body>
 </html>

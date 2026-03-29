@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agregar Servicio - Venus Nails</title>
+    <title>Modificar Servicio - Venus Nails</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #f3f0f8; font-family: Arial, sans-serif; min-height: 100vh; }
@@ -21,6 +21,21 @@
 <body>
     <header>🌸 Venus Nails Spa</header>
     <main>
-        <h1>💅 Agregar Servicio</h1>
+        <h1>✏️ Modificar Servicio</h1>
         <div class="card">
-            <form th:action="@{
+            <form th:action="@{/servicios/modificar/{id}(id=${servicio.idServicio})}" method="post" th:object="${servicio}">
+                <label>Nombre del servicio</label>
+                <input type="text" th:field="*{nombre}" required>
+                <label>Descripción</label>
+                <textarea th:field="*{descripcion}" rows="3"></textarea>
+                <label>Duración (minutos)</label>
+                <input type="number" th:field="*{duracion}" required>
+                <label>Precio</label>
+                <input type="number" th:field="*{precio}" step="0.01" required>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+            <a class="back" th:href="@{/servicios/listar}">← Volver a Servicios</a>
+        </div>
+    </main>
+</body>
+</html>
