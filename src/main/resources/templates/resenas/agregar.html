@@ -2,42 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Resenas - Venus Nails</title>
+    <title>Nueva Reseña - Venus Nails</title>
     <style>
-        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #7b5ea7; }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(123,94,167,0.15); }
-        th { background: #7b5ea7; color: white; padding: 12px; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid #f3f0f8; }
-        tr:hover { background: #f3f0f8; }
-        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
-        .back { color: #7b5ea7; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; min-height: 100vh; }
+        header { background: #7b5ea7; color: white; padding: 16px 40px; font-size: 20px; font-weight: bold; }
+        main { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        h1 { color: #7b5ea7; margin-bottom: 24px; }
+        .card { background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); width: 100%; max-width: 480px; }
+        label { display: block; color: #7b5ea7; font-weight: bold; margin-top: 16px; margin-bottom: 6px; }
+        select, textarea { width: 100%; padding: 10px; border: 1px solid #d1c4e9; border-radius: 8px; font-size: 14px; }
+        select:focus, textarea:focus { outline: none; border-color: #7b5ea7; }
+        .estrellas { display: flex; gap: 8px; margin-top: 8px; }
+        .estrellas input[type="radio"] { display: none; }
+        .estrellas label { color: #d1c4e9; font-size: 32px; cursor: pointer; margin: 0; font-weight: normal; }
+        .estrellas input[type="radio"]:checked ~ label,
+        .estrellas label:hover,
+        .estrellas label:hover ~ label { color: #fbc02d; }
+        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 24px; }
+        button:hover { background: #6a4f96; }
+        .back { color: #7b5ea7; text-decoration: none; display: inline-block; margin-top: 16px; }
     </style>
 </head>
 <body>
-    <h1>⭐ Resenas</h1>
-    <a class="back" th:href="@{/admin/panel}">← Volver</a>
-    <a class="btn" th:href="@{/resenas/agregar}">+ Nueva Resena</a>
-    <br><br>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ID Usuario</th>
-                <th>Comentario</th>
-                <th>Calificacion</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="resena : ${resenas}">
-                <td th:text="${resena.idResena}"></td>
-                <td th:text="${resena.idUsuario}"></td>
-                <td th:text="${resena.comentario}"></td>
-                <td th:text="${resena.calificacion}"></td>
-                <td th:text="${resena.fecha}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <header>🌸 Venus Nails Spa</header>
+    <main>
+        <h1>⭐ Nueva Reseña</h1>
+        <div class="card">
+            <form th:action="@{/resenas/agregar}" method="post">
+                <label>Comentario</label>
+                <textarea name="comentario" rows="4" placeholder="Escribe tu experiencia..." required></textarea>
+                <label>Calificación</label>
+                <select name="calificacion" required>
+                    <option value="">-- Seleccionar --</option>
+                    <option value="1">⭐ 1 - Malo</option>
+                    <option value="2">⭐⭐ 2 - Regular</option>
+                    <option value="3">⭐⭐⭐ 3 - Bueno</option>
+                    <option value="4">⭐⭐⭐⭐ 4 - Muy bueno</option>
+                    <option value="5">⭐⭐⭐⭐⭐ 5 - Excelente</option>
+                </select>
+                <button type="submit">Publicar Reseña</button>
+            </form>
+            <a class="back" th:href="@{/resenas/listar}">← Volver a Reseñas</a>
+        </div>
+    </main>
 </body>
 </html>

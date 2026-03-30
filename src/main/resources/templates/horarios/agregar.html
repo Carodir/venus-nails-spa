@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Horario - Venus Nails</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; min-height: 100vh; }
+        header { background: #7b5ea7; color: white; padding: 16px 40px; font-size: 20px; font-weight: bold; }
+        main { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        h1 { color: #7b5ea7; margin-bottom: 24px; }
+        .card { background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); width: 100%; max-width: 480px; }
+        label { display: block; color: #7b5ea7; font-weight: bold; margin-top: 16px; margin-bottom: 6px; }
+        select { width: 100%; padding: 10px; border: 1px solid #d1c4e9; border-radius: 8px; font-size: 14px; }
+        select:focus { outline: none; border-color: #7b5ea7; }
+        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 24px; }
+        button:hover { background: #6a4f96; }
+        .back { color: #7b5ea7; text-decoration: none; display: inline-block; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <header>🌸 Venus Nails Spa</header>
+    <main>
+        <h1>🕐 Agregar Horario</h1>
+        <div class="card">
+            <form th:action="@{/horarios/agregar}" method="post">
+                <label>Manicurista</label>
+                <select name="idUsuario" required>
+                    <option value="">-- Seleccionar manicurista --</option>
+                    <option th:each="m : ${manicuristas}"
+                            th:value="${m.idUsuario}"
+                            th:text="${m.nombre + ' ' + m.apellido}">
+                    </option>
+                </select>
+                <label>Día de la semana</label>
+                <select name="diaSemana" required>
+                    <option value="">-- Seleccionar día --</option>
+                    <option value="Lunes">Lunes</option>
+                    <option value="Martes">Martes</option>
+                    <option value="Miércoles">Miércoles</option>
+                    <option value="Jueves">Jueves</option>
+                    <option value="Viernes">Viernes</option>
+                    <option value="Sábado">Sábado</option>
+                    <option value="Domingo">Domingo</option>
+                </select>
+                <label>Hora de inicio</label>
+                <select name="horaInicio" required>
+                    <option value="">-- Seleccionar hora --</option>
+                    <option value="09:00">9:00 AM</option>
+                    <option value="09:30">9:30 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="10:30">10:30 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="11:30">11:30 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                    <option value="13:30">1:30 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="14:30">2:30 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="15:30">3:30 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                    <option value="16:30">4:30 PM</option>
+                    <option value="17:00">5:00 PM</option>
+                    <option value="17:30">5:30 PM</option>
+                    <option value="18:00">6:00 PM</option>
+                    <option value="18:30">6:30 PM</option>
+                    <option value="19:00">7:00 PM</option>
+                </select>
+                <label>Hora de fin</label>
+                <select name="horaFin" required>
+                    <option value="">-- Seleccionar hora --</option>
+                    <option value="09:00">9:00 AM</option>
+                    <option value="09:30">9:30 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="10:30">10:30 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="11:30">11:30 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                    <option value="13:30">1:30 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="14:30">2:30 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="15:30">3:30 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                    <option value="16:30">4:30 PM</option>
+                    <option value="17:00">5:00 PM</option>
+                    <option value="17:30">5:30 PM</option>
+                    <option value="18:00">6:00 PM</option>
+                    <option value="18:30">6:30 PM</option>
+                    <option value="19:00">7:00 PM</option>
+                </select>
+                <button type="submit">Guardar Horario</button>
+            </form>
+            <a class="back" th:href="@{/horarios/listar}">← Volver a Horarios</a>
+        </div>
+    </main>
+</body>
+</html>

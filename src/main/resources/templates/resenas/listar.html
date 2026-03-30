@@ -2,42 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Resenas - Venus Nails</title>
+    <title>Reseñas - Venus Nails</title>
     <style>
-        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #7b5ea7; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; min-height: 100vh; }
+        header { background: #7b5ea7; color: white; padding: 16px 40px; font-size: 20px; font-weight: bold; }
+        main { padding: 40px; }
+        h1 { color: #7b5ea7; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(123,94,167,0.15); }
         th { background: #7b5ea7; color: white; padding: 12px; text-align: left; }
         td { padding: 12px; border-bottom: 1px solid #f3f0f8; }
         tr:hover { background: #f3f0f8; }
-        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
-        .back { color: #7b5ea7; }
+        .top-bar { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+        .btn { background: #7b5ea7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block; }
+        .btn-delete { background: #e53935; color: white; padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; }
+        .back { color: #7b5ea7; text-decoration: none; display: inline-block; margin-top: 20px; }
+        .estrellas { color: #fbc02d; font-size: 18px; }
     </style>
 </head>
 <body>
-    <h1>⭐ Resenas</h1>
-    <a class="back" th:href="@{/admin/panel}">← Volver</a>
-    <a class="btn" th:href="@{/resenas/agregar}">+ Nueva Resena</a>
-    <br><br>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ID Usuario</th>
-                <th>Comentario</th>
-                <th>Calificacion</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="resena : ${resenas}">
-                <td th:text="${resena.idResena}"></td>
-                <td th:text="${resena.idUsuario}"></td>
-                <td th:text="${resena.comentario}"></td>
-                <td th:text="${resena.calificacion}"></td>
-                <td th:text="${resena.fecha}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <header>🌸 Venus Nails Spa</header>
+    <main>
+        <h1>⭐ Reseñas</h1>
+        <div class="top-bar">
+            <a class="btn" th:href="@{/resenas/agregar}">+ Nueva Reseña</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Comentario</th>
+                    <th>Calificación</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="resena : ${resenas}">
+                    <td th:text="${resena.idResena}"></td>
+                    <td th:text="${resena.usuario.nombre + ' ' + resena.usuario.apellido}"></td>
+                    <td th:text="${resena.comentario}"></td>
+                    <td>
+                        <span class="estrellas"
+                              th:text="${resena.calificacion == 1 ? '★☆☆☆☆' :
+                                        resena.calificacion == 2 ? '★★☆☆☆' :
+                                        resena.calificacion == 3 ? '★★★☆☆' :
+                                        resena.calificacion == 4 ? '★★★★☆' : '★★★★★'}">
+                        </span>
+                    </td>
+                    <td th:text="${resena.fecha}"></td>
+                    <td>
+                        <form th:action="@{/resenas/eliminar/{id}(id=${resena.idResena})}" method="post">
+                            <button class="btn-delete" type="submit"
+                                    onclick="return confirm('¿Segura que deseas eliminar esta reseña?')">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="back" th:href="@{/admin/panel}">← Volver al Panel</a>
+    </main>
 </body>
 </html>
