@@ -1,5 +1,6 @@
 package venus.nails.controlador;
 import venus.nails.modelo.Usuario;
+import venus.nails.repositorio.CitaRepositorio;
 import venus.nails.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 /**
  * Controlador para el modulo de gestion de usuarios.
- * Permite registrar nuevos usuarios y listar los existentes.
+ * Permite registrar, modificar, eliminar y listar usuarios.
  * @author Carolina
  * @version 1.0
  * @since 2026
@@ -17,6 +18,9 @@ public class UsuarioControlador {
     /** Repositorio de usuarios */
     @Autowired
     private UsuarioRepositorio usuarioRepo;
+    /** Repositorio de citas para verificar dependencias */
+    @Autowired
+    private CitaRepositorio citaRepo;
     /**
      * Lista todos los usuarios. Solo para admin.
      * @param model modelo para pasar datos a la vista
@@ -74,9 +78,49 @@ public class UsuarioControlador {
             model.addAttribute("error", "El correo ya esta registrado");
             return "registro";
         }
-        // El rol siempre es cliente para registro publico
         usuario.setRol("cliente");
         usuarioRepo.save(usuario);
         return "redirect:/login";
+    }
+    /**
+     * Muestra el formulario para modificar un usuario existente.
+     * @param id identificador del usuario
+     * @param model modelo con datos del usuario
+     * @return vista usuarios/modificar.html
+     */
+    @GetMapping("/usuarios/modificar/{id}")
+    public String mostrarModificar(@PathVariable int id, Model model) {
+        Usuario usuario = usuarioRepo.findById(id).orElseThrow();
+        model.addAttribute("usuario", usuario);
+        return "usuarios/modificar";
+    }
+    /**
+     * Procesa la modificacion de un usuario.
+     * @param id identificador del usuario
+     * @param usuario objeto con datos actualizados
+     * @return redireccion a listar usuarios
+     */
+    @PostMapping("/usuarios/modificar/{id}")
+    public String modificar(@PathVariable int id, @ModelAttribute Usuario usuario) {
+        usuario.setIdUsuario(id);
+        usuarioRepo.save(usuario);
+        return "redirect:/usuarios/listar";
+    }
+    /**
+     * Elimina un usuario por su ID si no tiene registros asociados.
+     * @param id identificador del usuario a eliminar
+     * @param model modelo para enviar errores a la vista
+     * @return redireccion a listar usuarios o mensaje de error
+     */
+    @PostMapping("/usuarios/eliminar/{id}")
+    public String eliminar(@PathVariable int id, Model model) {
+        try {
+            usuarioRepo.deleteById(id);
+        } catch (Exception e) {
+            model.addAttribute("usuarios", usuarioRepo.findAll());
+            model.addAttribute("error", "No se puede eliminar el usuario porque tiene registros asociados en el sistema.");
+            return "usuarios/listar";
+        }
+        return "redirect:/usuarios/listar";
     }
 }
