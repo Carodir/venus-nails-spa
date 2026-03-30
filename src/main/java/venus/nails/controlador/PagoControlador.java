@@ -1,14 +1,13 @@
 package venus.nails.controlador;
 import venus.nails.modelo.Pago;
 import venus.nails.modelo.Cita;
-import venus.nails.modelo.Servicio;
 import venus.nails.repositorio.PagoRepositorio;
 import venus.nails.repositorio.CitaRepositorio;
-import venus.nails.repositorio.ServicioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 /**
  * Controlador para el modulo de pagos de Venus Nails Spa.
  * Permite registrar y listar los pagos de cada cita.
@@ -25,9 +24,6 @@ public class PagoControlador {
     /** Repositorio de citas para obtener el servicio asociado */
     @Autowired
     private CitaRepositorio citaRepo;
-    /** Repositorio de servicios para obtener el monto automaticamente */
-    @Autowired
-    private ServicioRepositorio servicioRepo;
     /**
      * Redirige /pagos a /pagos/listar
      * @return redireccion a listar pagos
@@ -53,24 +49,28 @@ public class PagoControlador {
      */
     @GetMapping("/agregar")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("pago", new Pago());
-        model.addAttribute("citas", citaRepo.findAll());
+        model.addAttribute("citas", citaRepo.findAllByOrderByFechaAscHoraInicioAsc());
         return "pagos/agregar";
     }
     /**
      * Procesa el formulario de nuevo pago.
      * El monto se calcula automaticamente desde el precio del servicio.
-     * @param pago objeto pago con datos del formulario
+     * @param idCita id de la cita seleccionada
+     * @param metodo metodo de pago
+     * @param observaciones observaciones del pago
      * @return redireccion a listar pagos
      */
     @PostMapping("/agregar")
-    public String agregar(@ModelAttribute Pago pago) {
-        // Obtener la cita y su servicio para calcular el monto automaticamente
-        Cita cita = citaRepo.findById(pago.getIdCita()).orElseThrow();
-        Servicio servicio = cita.getServicio();
-        // Asignar el monto automaticamente desde el precio del servicio
-        pago.setMonto(servicio.getPrecio());
-        // Guardar el pago en la base de datos
+    public String agregar(@RequestParam int idCita,
+                          @RequestParam String metodo,
+                          @RequestParam(required = false) String observaciones) {
+        Cita cita = citaRepo.findById(idCita).orElseThrow();
+        Pago pago = new Pago();
+        pago.setCita(cita);
+        pago.setFecha(LocalDate.now());
+        pago.setMonto(cita.getServicio().getPrecio());
+        pago.setMetodo(metodo);
+        pago.setObservaciones(observaciones);
         pagoRepo.save(pago);
         return "redirect:/pagos/listar";
     }

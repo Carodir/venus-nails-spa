@@ -2,42 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agregar Pago - Venus Nails</title>
+    <title>Registrar Pago - Venus Nails</title>
     <style>
-        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #7b5ea7; }
-        .card { background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); max-width: 480px; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #d1c4e9; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 8px; }
-        button:hover { background: #5e2d91; }
-        .back { color: #7b5ea7; }
-        label { color: #555; font-size: 14px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f3f0f8; font-family: Arial, sans-serif; min-height: 100vh; }
+        header { background: #7b5ea7; color: white; padding: 16px 40px; font-size: 20px; font-weight: bold; }
+        main { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        h1 { color: #7b5ea7; margin-bottom: 24px; }
+        .card { background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 12px rgba(123,94,167,0.15); width: 100%; max-width: 480px; }
+        label { display: block; color: #7b5ea7; font-weight: bold; margin-top: 16px; margin-bottom: 6px; }
+        select, textarea { width: 100%; padding: 10px; border: 1px solid #d1c4e9; border-radius: 8px; font-size: 14px; }
+        select:focus, textarea:focus { outline: none; border-color: #7b5ea7; }
+        .info { background: #f3f0f8; padding: 10px; border-radius: 8px; color: #7b5ea7; font-size: 14px; margin-top: 8px; }
+        button { width: 100%; padding: 12px; background: #7b5ea7; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 24px; }
+        button:hover { background: #6a4f96; }
+        .back { color: #7b5ea7; text-decoration: none; display: inline-block; margin-top: 16px; }
     </style>
 </head>
 <body>
-    <h1>💳 Registrar Pago</h1>
-    <a class="back" th:href="@{/pagos/listar}">← Volver</a>
-    <br><br>
-    <div class="card">
-        <form th:action="@{/pagos/agregar}" method="post" th:object="${pago}">
-            <label>Cita</label>
-            <!-- th:each llena el select con las citas de la BD -->
-            <select th:field="*{idCita}">
-                <option th:each="cita : ${citas}"
-                        th:value="${cita.idCita}"
-                        th:text="${'Cita #' + cita.idCita + ' - ' + cita.fecha}">
-                </option>
-            </select>
-            <label>Fecha de pago</label>
-            <input type="date" th:field="*{fecha}" required>
-            <label>Metodo de pago</label>
-            <select th:field="*{metodo}">
-                <option value="Efectivo">Efectivo</option>
-                <option value="Tarjeta">Tarjeta</option>
-                <option value="Transferencia">Transferencia</option>
-            </select>
-            <button type="submit">Registrar Pago</button>
-        </form>
-    </div>
+    <header>🌸 Venus Nails Spa</header>
+    <main>
+        <h1>💳 Registrar Pago</h1>
+        <div class="card">
+            <form th:action="@{/pagos/agregar}" method="post">
+                <label>Cita</label>
+                <select name="idCita" required>
+                    <option value="">-- Seleccionar cita --</option>
+                    <option th:each="cita : ${citas}"
+                            th:value="${cita.idCita}"
+                            th:text="${cita.usuario.nombre + ' ' + cita.usuario.apellido + ' - ' + cita.fecha + ' ' + cita.horaInicio}">
+                    </option>
+                </select>
+                <div class="info">💡 El monto se calcula automáticamente según el servicio de la cita.</div>
+                <label>Método de pago</label>
+                <select name="metodo" required>
+                    <option value="">-- Seleccionar método --</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                    <option value="Transferencia">Transferencia</option>
+                </select>
+                <label>Observaciones</label>
+                <textarea name="observaciones" rows="3" placeholder="Opcional..."></textarea>
+                <button type="submit">Registrar Pago</button>
+            </form>
+            <a class="back" th:href="@{/pagos/listar}">← Volver a Pagos</a>
+        </div>
+    </main>
 </body>
 </html>
