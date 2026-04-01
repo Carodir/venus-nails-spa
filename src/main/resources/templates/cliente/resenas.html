@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Reseñas - Venus Nails Spa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f0f5; }
+        .header { background-color: #7b2d8b; color: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn-morado { background-color: #7b2d8b; color: white; }
+        .btn-morado:hover { background-color: #5a1f6b; color: white; }
+        .estrellas { color: #f5a623; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="header d-flex justify-content-between align-items-center">
+        <div>
+            <h2>💅 Venus Nails Spa</h2>
+            <p class="mb-0">Mis Reseñas</p>
+        </div>
+        <a href="/cliente/panel" class="btn btn-light">← Volver al panel</a>
+    </div>
+
+    <!-- Formulario nueva reseña -->
+    <div class="card p-4 mb-4">
+        <h5 class="mb-3">⭐ Escribir nueva reseña</h5>
+        <form action="/cliente/resenas/agregar" method="post">
+            <div class="mb-3">
+                <label class="form-label">Comentario</label>
+                <textarea name="comentario" class="form-control" rows="3" required
+                          placeholder="Cuéntanos tu experiencia..."></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Calificación</label>
+                <select name="calificacion" class="form-select" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+                    <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+                    <option value="3">⭐⭐⭐ Bueno</option>
+                    <option value="2">⭐⭐ Regular</option>
+                    <option value="1">⭐ Malo</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-morado">Enviar Reseña</button>
+        </form>
+    </div>
+
+    <!-- Lista de reseñas -->
+    <div class="card p-4">
+        <h5 class="mb-3">📋 Mis reseñas anteriores</h5>
+        <div th:if="${resenas.empty}" class="text-muted">Aún no has escrito ninguna reseña.</div>
+        <div th:each="resena : ${resenas}" class="border-bottom pb-3 mb-3">
+            <div class="estrellas">
+                <span th:each="i : ${#numbers.sequence(1, resena.calificacion)}">⭐</span>
+            </div>
+            <p class="mb-1" th:text="${resena.comentario}"></p>
+            <small class="text-muted" th:text="${resena.fecha}"></small>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

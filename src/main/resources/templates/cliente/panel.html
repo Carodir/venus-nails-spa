@@ -1,36 +1,79 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Panel Cliente - Venus Nails</title>
+    <title>Mi Panel - Venus Nails Spa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f3f0f8; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { color: #7b5ea7; }
-        .menu { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
-        .card {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(123,94,167,0.15);
-            width: 180px;
-            text-align: center;
-            text-decoration: none;
-            color: #7b5ea7;
-            font-weight: bold;
-        }
-        .card:hover { background: #7b5ea7; color: white; }
-        .logout { margin-top: 24px; display: inline-block; color: red; }
+        body { background-color: #f8f0f5; }
+        .header { background-color: #7b2d8b; color: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn-morado { background-color: #7b2d8b; color: white; }
+        .btn-morado:hover { background-color: #5a1f6b; color: white; }
+        .badge-pendiente { background-color: #ffc107; color: black; }
+        .badge-confirmada { background-color: #198754; }
+        .badge-cancelada { background-color: #dc3545; }
     </style>
 </head>
 <body>
-    <h1>🌸 Mi Panel</h1>
-    <p>Bienvenida, <span th:text="${session.usuarioLogueado.nombre}"></span></p>
-    <div class="menu">
-        <a class="card" th:href="@{/citas/agendar}">📅 Agendar Cita</a>
-        <a class="card" th:href="@{/citas/listar}">📋 Mis Citas</a>
-        <a class="card" th:href="@{/pagos/listar}">💳 Mis Pagos</a>
-        <a class="card" th:href="@{/resenas/agregar}">⭐ Dejar Resena</a>
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="header d-flex justify-content-between align-items-center">
+        <div>
+            <h2>💅 Venus Nails Spa</h2>
+            <p class="mb-0">Bienvenida, <strong th:text="${usuario.nombre}"></strong></p>
+        </div>
+        <a href="/logout" class="btn btn-light">Cerrar sesión</a>
     </div>
-    <a class="logout" th:href="@{/logout}">Cerrar sesion</a>
+
+    <!-- Botones acceso rápido -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card p-4 text-center">
+                <h5>📅 Mis Citas</h5>
+                <p class="text-muted">Agenda o consulta tus citas</p>
+                <a href="/cliente/agendar" class="btn btn-morado">Nueva Cita</a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card p-4 text-center">
+                <h5>⭐ Mis Reseñas</h5>
+                <p class="text-muted">Comparte tu experiencia</p>
+                <a href="/cliente/resenas" class="btn btn-morado">Ver Reseñas</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de citas -->
+    <div class="card p-4">
+        <h5 class="mb-3">📋 Mis Citas</h5>
+        <div th:if="${citas.empty}" class="text-muted">No tienes citas registradas aún.</div>
+        <table th:if="${!citas.empty}" class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cita : ${citas}">
+                    <td th:text="${cita.servicio.nombre}"></td>
+                    <td th:text="${cita.fecha}"></td>
+                    <td th:text="${cita.horaInicio}"></td>
+                    <td>
+                        <span th:classappend="${cita.estado == 'Pendiente'} ? 'badge-pendiente' :
+                                             (${cita.estado == 'Confirmada'} ? 'badge-confirmada' : 'badge-cancelada')"
+                              class="badge"
+                              th:text="${cita.estado}"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
 </body>
 </html>
