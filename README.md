@@ -239,4 +239,4 @@ https://github.com/Carodir/venus-nails-spa
 - [ ] Selección de manicurista disponible por servicio desde el panel del cliente
 
 
-Tecnología en Análisis y Desarrollo de Sistemas de Información*
+Tecnologo Analisis y desarrollo de software. 
