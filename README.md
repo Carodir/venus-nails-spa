@@ -8,13 +8,12 @@
 ![MySQL](https://img.shields.io/badge/MySQL-Base_de_datos-16a34a?style=flat-square)
 ![Maven](https://img.shields.io/badge/Maven-3.9.14-ea580c?style=flat-square)
 
----
+
 
 ## 📋 Descripción del proyecto
 
 Venus Nails Spa es un sistema web de gestión integral para un spa de uñas. Permite administrar clientes, agendar citas, gestionar servicios, registrar pagos, asignar horarios a manicuristas y recopilar reseñas. El sistema cuenta con autenticación por roles (admin, cliente, manicurista) y una capa de API REST adicional para integración con otros servicios.
 
----
 
 ## ⚙️ Configuración técnica
 
@@ -28,7 +27,7 @@ Venus Nails Spa es un sistema web de gestión integral para un spa de uñas. Per
 | Seguridad | Spring Security con roles |
 | Puerto del servidor | `8081` |
 
----
+
 
 ## 🧩 Stack tecnológico (dependencias Maven)
 
@@ -42,7 +41,7 @@ Venus Nails Spa es un sistema web de gestión integral para un spa de uñas. Per
 | `mysql-connector-j` | Conector JDBC para MySQL |
 | `lombok` | Reducción de código boilerplate |
 
----
+
 
 ## 🚀 Instalación y ejecución
 
@@ -95,7 +94,6 @@ http://localhost:8081/login
 
 > Spring Security maneja los roles internamente como `ROLE_admin`, `ROLE_cliente` y `ROLE_manicurista`.
 
----
 
 ## 🗂️ Arquitectura del proyecto
 
@@ -134,7 +132,7 @@ venus.nails/
     └── UserDetailsServiceImpl.java
 ```
 
----
+
 
 ## ✅ Módulos completados
 
@@ -151,7 +149,7 @@ venus.nails/
 - [x] API REST con 4 módulos (rama `api`)
 - [x] Versionamiento con Git y GitHub
 
----
+
 
 ## 🔌 API REST
 
@@ -190,7 +188,7 @@ venus.nails/
 | `GET` | `/api/pagos/listar` | Lista todos los pagos |
 | `POST` | `/api/pagos/crear` | Registra un nuevo pago |
 
----
+
 
 ## 🔐 Seguridad
 
@@ -203,7 +201,7 @@ venus.nails/
 | CSRF | Desactivado para permitir peticiones REST |
 | Rutas públicas | `/login`, `/registro`, `/css/**`, `/js/**`, `/images/**`, `/api/**` |
 
----
+
 
 ## 🗃️ Modelos de base de datos
 
@@ -216,7 +214,7 @@ venus.nails/
 | Horario | `horario_disponible` | dia, horaInicio, horaFin |
 | Reseña | `resena` | comentario, calificacion (1-5), fecha |
 
----
+
 
 ## 📁 Repositorio y ramas
 
@@ -229,7 +227,7 @@ https://github.com/Carodir/venus-nails-spa
 | `master` | Proyecto principal con vistas Thymeleaf y todos los módulos |
 | `api` | Capa de API REST agregada sin afectar la rama master |
 
----
+
 
 ## ⚠️ Mejoras pendientes
 
@@ -240,6 +238,5 @@ https://github.com/Carodir/venus-nails-spa
 - [ ] Bloqueo de horarios ocupados para evitar conflictos
 - [ ] Selección de manicurista disponible por servicio desde el panel del cliente
 
----
 
-*Proyecto desarrollado como evidencia de aprendizaje — SENA | Tecnología en Análisis y Desarrollo de Sistemas de Información*
+Tecnología en Análisis y Desarrollo de Sistemas de Información*
