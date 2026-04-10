@@ -50,8 +50,6 @@ public class SecurityConfig {
             String rol = authentication.getAuthorities().iterator().next().getAuthority();
             System.out.println("✅ Login exitoso, rol: " + rol);
 
-            // Guardar usuario en sesión
-
             Usuario usuario = usuarioRepo.findByCorreo(correo).orElse(null);
             request.getSession().setAttribute("usuarioLogueado", usuario);
             request.getSession().setAttribute("rol", usuario.getRol());
@@ -67,30 +65,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authenticationProvider(authProvider())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/registro", "/css/**", "/js/**", "/images/**", "/api/**",
-                                "/api/pagos/**")
-                        .permitAll()
-                        .requestMatchers("/admin/**", "/usuarios/**", "/servicios/**",
-                                "/pagos/**", "/horarios/**", "/resenas/**",
-                                "/citas/**")
-                        .hasAuthority("ROLE_admin")
-                        .requestMatchers("/cliente/**").hasAuthority("ROLE_cliente")
-                        .requestMatchers("/manicurista/**").hasAuthority("ROLE_manicurista")
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .usernameParameter("correo")
-                        .passwordParameter("contrasena")
-                        .successHandler(successHandler())
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
-                        .permitAll())
-                .csrf(csrf -> csrf.disable());
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll())
+            .csrf(csrf -> csrf.disable())
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable());
 
         return http.build();
     }

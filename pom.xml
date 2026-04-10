@@ -27,19 +27,16 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-starter-web</artifactId>
                 </dependency>
-
-                <!--AGREGADO: Spring Security -->
+                <!-- Spring Security -->
                 <dependency>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-starter-security</artifactId>
                 </dependency>
-
-                <!--  AGREGADO: Thymeleaf + Spring Security -->
+                <!-- Thymeleaf + Spring Security -->
                 <dependency>
                         <groupId>org.thymeleaf.extras</groupId>
                         <artifactId>thymeleaf-extras-springsecurity6</artifactId>
                 </dependency>
-
                 <dependency>
                         <groupId>com.mysql</groupId>
                         <artifactId>mysql-connector-j</artifactId>
@@ -58,13 +55,6 @@
         </dependencies>
         <build>
                 <plugins>
-                        <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-surefire-plugin</artifactId>
-                                <configuration>
-                                        <skipTests>true</skipTests>
-                                </configuration>
-                        </plugin>
                         <plugin>
                                 <groupId>org.apache.maven.plugins</groupId>
                                 <artifactId>maven-compiler-plugin</artifactId>
